@@ -1,0 +1,33 @@
+{
+  "name": "cirrus",
+  "version": "1.0.0",
+  "description": "Terraform form generator to bridge the gap between user requests and IaC!",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shawnweigand/cirrus-cli.git"
+  },
+  "author": "shawnweigand",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shawnweigand/cirrus-cli/issues"
+  },
+  "homepage": "https://github.com/shawnweigand/cirrus-cli#readme",
+  "bin": {
+    "cirrus": "./bin/index.js"
+  },
+  "dependencies": {
+    "boxen": "^8.0.1",
+    "chalk": "^5.4.1",
+    "chalk-animation": "^2.0.3",
+    "figlet": "^1.8.1",
+    "gradient-string": "^3.0.0",
+    "inquirer": "^12.6.3",
+    "nanospinner": "^1.2.2",
+    "yargs": "^17.7.2"
+  }
+}
