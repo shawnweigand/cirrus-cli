@@ -9,6 +9,7 @@ import figlet from 'figlet';
 import { createSpinner } from 'nanospinner';
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers';
+import cirrusView from '../utils/view.js';
 
 const argv = hideBin(process.argv);
 
@@ -21,7 +22,7 @@ const y = yargs(hideBin(process.argv))
             return yargs.option('from', {
                 alias: 'f',
                 type: 'string',
-                describe: 'Comma-separated list of Terraform variables files to initialize form schema from',
+                describe: 'Comma-separated list of Terraform variables file paths to initialize form schema from.',
                 default: '.',
                 demandOption: false,
             })
@@ -31,6 +32,21 @@ const y = yargs(hideBin(process.argv))
             console.log(`Initializing cirrus project from: ${argv.from}`);
             // Your init logic here
         }
+    )
+    .command(
+        'view',
+        'View Terraform form schema',
+        (yargs) => {
+            return yargs.option('from', {
+                alias: 'f',
+                type: 'string',
+                describe: 'Comma-separated list of schema file paths to view the generated form from.',
+                default: './.cirrus',
+                demandOption: false,
+            })
+            .usage('Usage: $0 view --from <paths>');
+        },
+        (argv) => cirrusView(argv)
     )
     .demandCommand(1, 'You need at least one command before moving on')
     .help()

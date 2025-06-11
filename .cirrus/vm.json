@@ -1,0 +1,13 @@
+[
+    {
+        "id":"name",
+        "type":"text",
+        "label":"Name",
+        "description":"The name of your VM",
+        "default":"test",
+        "validation":[
+            "required",
+            "max:5"
+        ]
+    }
+]

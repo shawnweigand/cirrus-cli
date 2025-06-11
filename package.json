@@ -24,10 +24,12 @@
     "boxen": "^8.0.1",
     "chalk": "^5.4.1",
     "chalk-animation": "^2.0.3",
+    "express": "^5.1.0",
     "figlet": "^1.8.1",
     "gradient-string": "^3.0.0",
     "inquirer": "^12.6.3",
     "nanospinner": "^1.2.2",
+    "open": "^10.1.2",
     "yargs": "^17.7.2"
   }
 }
