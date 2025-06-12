@@ -4,7 +4,7 @@
         "type":"text",
         "label":"Name",
         "description":"The name of your VM",
-        "default":"test",
+        "default":"db",
         "validation":[
             "required",
             "max:5"
