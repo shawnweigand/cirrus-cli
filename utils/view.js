@@ -2,9 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import open from 'open';
 import express from 'express';
+import { json } from 'stream/consumers';
+import { title } from 'process';
 
 const collectData = (argv) => {
-    console.log(`Viewing cirrus project schema from: ${argv.from}`);
     // Intake the schema json from the scecified comma-separated paths and display it, handle the schema is not found in the specified paths
     const paths = argv.from.split(',').map(path => path.trim());
     const uniquePaths = [];
@@ -34,7 +35,11 @@ const collectData = (argv) => {
             try {
                 const content = fs.readFileSync(resolvedPath, 'utf-8');
                 const parsed = JSON.parse(content);
-                jsonContents.push({ path: relativePath, content: parsed });
+                jsonContents.push({
+                    title: path.basename(resolvedPath).replace('.json', ''),
+                    path: relativePath, 
+                    content: parsed 
+                });
             } catch (err) {
                 console.error(`⚠️ Invalid JSON in file: ${relativePath}\n${err.message}`);
             }
@@ -47,7 +52,11 @@ const collectData = (argv) => {
                     try {
                     const content = fs.readFileSync(filePath, 'utf-8');
                     const parsed = JSON.parse(content);
-                    jsonContents.push({ path: relFilePath, content: parsed });
+                    jsonContents.push({ 
+                        title: path.basename(filePath).replace('.json', ''),
+                        path: relFilePath, 
+                        content: parsed 
+                    });
                 } catch (err) {
                     console.error(`⚠️ Invalid JSON in file: ${relFilePath}\n${err.message}`);
                 }
@@ -57,6 +66,7 @@ const collectData = (argv) => {
             console.warn(`⚠️ Not a regular file or directory: ${relativePath}`);
         }
     })
+    // console.log(JSON.stringify(jsonContents, null, 2));
     return jsonContents
 }
 
@@ -65,7 +75,6 @@ const cirrusView = (argv) => {
         console.error('❌ No schema file paths provided. Use --from to specify paths.');
         return;
     }
-    let schemas = collectData(argv)
     const app = express();
     const port = 4567;
     const iframe = "http://localhost:80/view"
@@ -81,7 +90,16 @@ const cirrusView = (argv) => {
             </style>
         </head>
         <body>
-            <iframe src="${iframe}"></iframe>
+            <iframe id="cirrus-frame" src="${iframe}"></iframe>
+            <script>
+                const schemas = ${JSON.stringify(collectData(argv))};
+                const iframe = document.getElementById('cirrus-frame');
+                window.addEventListener('message', (event) => {
+                    if (event.data?.type === 'REQUEST_SCHEMAS') {
+                        iframe.contentWindow.postMessage({ type: 'LOAD_SCHEMAS', schemas }, '*');
+                    }
+                });
+            </script>
         </body>
         </html>
         `;
@@ -89,7 +107,8 @@ const cirrusView = (argv) => {
     });
 
     app.listen(port, () => {
-    console.log(`🌐 View your data at http://localhost:${port}`);
+    console.log(`🌐 View your data at http://localhost:${port}/view`);
+    console.log('Press Ctrl+C to stop the server.');
     open(`http://localhost:${port}/view`);
     });
 };
