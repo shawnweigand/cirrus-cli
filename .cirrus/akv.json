@@ -1,10 +1,10 @@
 [
     {
-        "id":"name",
+        "id":"akv_name",
         "type":"text",
         "label":"Name",
-        "description":"The name of your VM",
-        "default":"db",
+        "description":"The name of your Azure Key Vault",
+        "default":"akv",
         "validation":[
             "required",
             "max:5"

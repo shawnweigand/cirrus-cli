@@ -1,10 +1,10 @@
 [
     {
-        "id":"name",
+        "id":"sa_name",
         "type":"text",
         "label":"Name",
-        "description":"The name of your VM",
-        "default":"vm",
+        "description":"The name of your Storage Account",
+        "default":"sa",
         "validation":[
             "required",
             "max:5"
