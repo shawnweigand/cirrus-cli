@@ -9,5 +9,16 @@
             "required",
             "max:5"
         ]
+    },
+    {
+        "id":"sa_other_name",
+        "type":"text",
+        "label":"Name",
+        "description":"The name of your Storage Account",
+        "default":"sa",
+        "validation":[
+            "required",
+            "max:5"
+        ]
     }
 ]

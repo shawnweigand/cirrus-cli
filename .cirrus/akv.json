@@ -8,7 +8,8 @@
         "validation":[
             "required",
             "max:5"
-        ]
+        ],
+        "condition": "includes(form.akv_zones, 3)"
     },
     {
         "id":"akv_zones",
